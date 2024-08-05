@@ -25,7 +25,7 @@ if [[ -z $container_db_test ]]; then
     -e POSTGRES_PASSWORD=mysecretpassword \
     -e POSTGRES_DB=grafana \
     -e PGDATA=/var/lib/postgresql/data/pgdata \
-    --volume ./database:/var/lib/postgresql/data/pgdata:rw \
+    --volume $(pwd)/database:/var/lib/postgresql/data/pgdata:rw \
     postgres:16.3-alpine3.20
 fi
 
@@ -34,7 +34,7 @@ if [[ -z $container_app_test ]]; then
   docker create --rm -p 3000:3000 --name=grafana_app \
     --net grafana_external --ip 192.168.201.2 \
     --user "0" \
-    --volume ./data:/var/lib/grafana:rw \
+    --volume $(pwd)/data:/var/lib/grafana:rw \
     -e "GF_SERVER_ROOT_URL=http://my.grafana.server/" \
     -e "GF_SERVER_HTTP_ADDR=192.168.201.2" \
     -e "GF_DATABASE_TYPE=postgres" \
